@@ -1,0 +1,48 @@
+{
+  "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[URIMP.IContent, Assembly-CSharp]], mscorlib",
+  "Книга 1": {
+    "$type": "URIMP.Examples.Book, Assembly-CSharp",
+    "Persons": {
+      "$type": "System.Collections.Generic.List`1[[URIMP.Examples.Person, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$type": "URIMP.Examples.Person, Assembly-CSharp",
+          "Name": "Ктотов Ктото Ктотович",
+          "PersonPagePath": "Книга 1\\Ктотов Ктото Ктотович\\Person_Page.jpg"
+        }
+      ]
+    },
+    "Id": "Книга 1",
+    "Name": "Книга 1"
+  },
+  "Книга 2": {
+    "$type": "URIMP.Examples.Book, Assembly-CSharp",
+    "Persons": {
+      "$type": "System.Collections.Generic.List`1[[URIMP.Examples.Person, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$type": "URIMP.Examples.Person, Assembly-CSharp",
+          "Name": "Ктотов Ктото Ктотович",
+          "PersonPagePath": "Книга 2\\Ктотов Ктото Ктотович\\Person_Page.jpg"
+        }
+      ]
+    },
+    "Id": "Книга 2",
+    "Name": "Книга 2"
+  },
+  "Книга 3": {
+    "$type": "URIMP.Examples.Book, Assembly-CSharp",
+    "Persons": {
+      "$type": "System.Collections.Generic.List`1[[URIMP.Examples.Person, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$type": "URIMP.Examples.Person, Assembly-CSharp",
+          "Name": "Ктотов Ктото Ктотович",
+          "PersonPagePath": "Книга 3\\Ктотов Ктото Ктотович\\Person_Page.jpg"
+        }
+      ]
+    },
+    "Id": "Книга 3",
+    "Name": "Книга 3"
+  }
+}
