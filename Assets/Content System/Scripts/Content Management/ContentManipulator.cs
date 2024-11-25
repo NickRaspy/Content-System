@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -30,12 +31,7 @@ namespace URIMP
 
         public bool SaveContentToFile(string id)
         {
-            IContent content = ContentManager.Instance.GetContent(id);
-            if (content == null)
-            {
-                Debug.LogError("Content not found.");
-                return false;
-            }
+            IContent content = GetContent(id);
 
             string filePath = Path.Combine(contentPath, content.Name);
             foreach (var handler in contentHandlers.Values)
@@ -55,22 +51,96 @@ namespace URIMP
             return false;
         }
 
-        public bool DeleteContentFile(string id)
+        public bool SaveSubcontentToFile(string id, ISubcontent subcontent) 
         {
-            IContent content = ContentManager.Instance.GetContent(id);
-            if (content == null)
+            string filePath = Path.Combine(contentPath, GetContent(id).Name, subcontent.Name);
+            foreach (var handler in contentHandlers.Values)
             {
-                Debug.LogError("Content not found.");
-                return false;
+                try
+                {
+                    handler.SaveSubcontent(subcontent, filePath);
+                    return true;
+                }
+                catch
+                {
+                    // Если обработчик не подходит, продолжаем
+                }
             }
 
-            string filePath = Path.Combine(contentPath, content.Name);
+            Debug.LogError("No suitable handler found for saving subcontent.");
+            return false;
+        }
+
+        public bool DeleteContentFile(string id)
+        {
+            string filePath = Path.Combine(contentPath, GetContent(id).Name);
+
+            return DeleteFile(filePath);
+        }
+        public bool DeleteSubcontentFile(string id, ISubcontent subcontent)
+        {
+            string filePath = Path.Combine(contentPath, GetContent(id).Name, subcontent.Name);
+
+            return DeleteFile(filePath);
+        }
+
+        private bool DeleteFile(string filePath)
+        {
+            bool isDeleted = false;
             if (Directory.Exists(filePath) || File.Exists(filePath))
             {
-                File.Delete(filePath);
-                return true;
+                try
+                {
+                    File.Delete(filePath);
+                    isDeleted = true;
+                }
+                catch
+                {
+                    try
+                    {
+                        Directory.Delete(filePath, true);
+                        isDeleted = true;
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.LogError($"Can't delete this content because: {ex.Message}");
+                    }
+                }
             }
-            return false;
+            if(isDeleted && File.Exists(filePath + ".meta")) File.Delete(filePath + ".meta");
+            return isDeleted;
+        }
+
+        public void EditContent(string id, IContent previousContent, IContent newContent)
+        {
+            string filePath = Path.Combine(contentPath, GetContent(id).Name);
+            foreach (var handler in contentHandlers.Values)
+            {
+                try
+                {
+                    handler.EditContent(previousContent, newContent, filePath);
+                }
+                catch
+                {
+                    // Если обработчик не подходит, продолжаем
+                }
+            }
+        }
+
+        public void EditSubcontent(string id, ISubcontent previousSubcontent, ISubcontent newSubcontent) 
+        {
+            string filePath = Path.Combine(contentPath, GetContent(id).Name);
+            foreach (var handler in contentHandlers.Values)
+            {
+                try
+                {
+                    handler.EditSubcontent(previousSubcontent, newSubcontent, filePath);
+                }
+                catch
+                {
+                    // Если обработчик не подходит, продолжаем
+                }
+            }
         }
 
         public IContent LoadContentFromFile(string fileName)
@@ -98,6 +168,17 @@ namespace URIMP
 
             Debug.LogError("No suitable handler found for loading content.");
             return null;
+        }
+
+        private IContent GetContent(string id)
+        {
+            IContent content = ContentManager.Instance.GetContent(id);
+            if (content == null)
+            {
+                Debug.LogError("Content not found.");
+                return null;
+            }
+            return content;
         }
 
         public abstract void DefineContent();

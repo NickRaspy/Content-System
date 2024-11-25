@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace URIMP.Examples
@@ -12,6 +13,7 @@ namespace URIMP.Examples
         private readonly BookLoadType bookLoadType;
 
         public BookHander(BookLoadType bookLoadType) => this.bookLoadType = bookLoadType;
+
         public IContent LoadContent(string filePath)
         {
             List<Person> persons = new();
@@ -50,22 +52,77 @@ namespace URIMP.Examples
 
                 persons.Add(person);
             }
-            return new Book(Path.GetFileName(filePath), Path.GetFileName(filePath), persons);
+            Match match = Regex.Match(Path.GetFileName(filePath), @"\d+");
+            return new Book($"book_{(match.Success ? Convert.ToInt32(match.Value) : UnityEngine.Random.Range(10000, 99999).ToString())}", Path.GetFileName(filePath), persons);
         }
 
         public void SaveContent(IContent content, string filePath)
         {
             if (content is Book book) 
             {
-                book.Persons.ForEach(p => 
+                if (!Directory.Exists(filePath))
+                    Directory.CreateDirectory(filePath);
+
+                var directories = Directory.GetDirectories(filePath);
+
+                for (int i = 0; i < directories.Length; i++) 
                 {
-                    File.Copy(p.PersonPagePath, Path.Combine(filePath, "Person_Page.png"));
+                    directories[i] = directories[i].Split('\\').Last();
+                }
 
-                    p.PersonPagePath = Path.Combine(filePath, "Person_Page.png");
+                List<Person> persons = book.Persons;
 
-                    if (bookLoadType == BookLoadType.Separated)
-                        File.WriteAllText(Path.Combine(filePath, "Person_Name.txt"), p.Name);
-                });
+                persons.RemoveAll(x => directories.Contains(x.Name));
+
+                if(persons.Count > 0)
+                    persons.ForEach(p => 
+                    {
+                        SaveSubcontent(p, Path.Combine(filePath, p.Name));
+                    });
+            }
+        }
+
+        public void SaveSubcontent(ISubcontent subcontent, string filePath)
+        {
+            if(subcontent is Person person)
+            {
+                if (!Directory.Exists(filePath))
+                    Directory.CreateDirectory(filePath);
+
+                File.Copy(person.PersonPagePath, Path.Combine(filePath, "Person_Page.png"));
+
+                person.PersonPagePath = Path.Combine(filePath, "Person_Page.png");
+
+                if (bookLoadType == BookLoadType.Separated)
+                    File.WriteAllText(Path.Combine(filePath, "Person_Name.txt"), person.Name);
+            }
+        }
+
+        public void EditContent(IContent previousContent, IContent newContent, string filePath)
+        {
+            if (newContent is Book newBook)
+            {
+                if (Directory.Exists(filePath))
+                    Directory.Move(filePath, Path.Combine(ContentManager.Instance.ContentPath, newBook.Name));
+            }
+        }
+
+        public void EditSubcontent(ISubcontent previousSubcontent, ISubcontent newSubcontent, string filePath)
+        {
+            if (previousSubcontent is Person previousPerson && newSubcontent is Person newPerson) 
+            {
+                string prevPath = Path.Combine(filePath, previousSubcontent.Name);
+                string newPath = Path.Combine(filePath, newPerson.Name);
+
+                if (Directory.Exists(prevPath) && previousPerson.Name != newPerson.Name)
+                {
+                    Directory.Move(prevPath, newPath);
+                    File.Delete(prevPath + ".meta");
+                }
+
+                File.Copy(newPerson.PersonPagePath, Path.Combine(newPath, "Person_Page.png"), true);
+
+                newPerson.PersonPagePath = Path.Combine(newPath, "Person_Page.png");
             }
         }
     }

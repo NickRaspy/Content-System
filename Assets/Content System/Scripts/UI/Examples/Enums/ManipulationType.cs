@@ -1,7 +1,10 @@
 using System;
 
-[Serializable]
-public enum ManipulationType
+namespace URIMP.Examples
 {
-    Edit, Delete
+    [Serializable]
+    public enum ManipulationType
+    {
+        Edit, Delete
+    }
 }

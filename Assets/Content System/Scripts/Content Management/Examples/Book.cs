@@ -28,7 +28,7 @@ namespace URIMP.Examples
 
         }
     }
-    public class Person
+    public class Person : ISubcontent
     {
         public string Name { get; set; }
         public string PersonPagePath { get; set; }

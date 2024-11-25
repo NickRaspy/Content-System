@@ -1,6 +1,6 @@
 {
   "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[URIMP.IContent, Assembly-CSharp]], mscorlib",
-  "Книга 1": {
+  "book_1": {
     "$type": "URIMP.Examples.Book, Assembly-CSharp",
     "Persons": {
       "$type": "System.Collections.Generic.List`1[[URIMP.Examples.Person, Assembly-CSharp]], mscorlib",
@@ -12,10 +12,10 @@
         }
       ]
     },
-    "Id": "Книга 1",
+    "Id": "book_1",
     "Name": "Книга 1"
   },
-  "Книга 2": {
+  "book_2": {
     "$type": "URIMP.Examples.Book, Assembly-CSharp",
     "Persons": {
       "$type": "System.Collections.Generic.List`1[[URIMP.Examples.Person, Assembly-CSharp]], mscorlib",
@@ -27,10 +27,10 @@
         }
       ]
     },
-    "Id": "Книга 2",
+    "Id": "book_2",
     "Name": "Книга 2"
   },
-  "Книга 3": {
+  "book_3": {
     "$type": "URIMP.Examples.Book, Assembly-CSharp",
     "Persons": {
       "$type": "System.Collections.Generic.List`1[[URIMP.Examples.Person, Assembly-CSharp]], mscorlib",
@@ -42,7 +42,7 @@
         }
       ]
     },
-    "Id": "Книга 3",
+    "Id": "book_3",
     "Name": "Книга 3"
   }
 }

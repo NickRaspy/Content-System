@@ -5,6 +5,16 @@ namespace URIMP.Examples
 {
     public class ImageContentHandler : IContentHandler
     {
+        public void EditContent(IContent previousContent, IContent newContent, string filePath)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void EditSubcontent(ISubcontent previousSubcontent, ISubcontent newSubcontent, string filePath)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IContent LoadContent(string filePath)
         {
             byte[] imageData = File.ReadAllBytes(filePath);
@@ -20,6 +30,11 @@ namespace URIMP.Examples
                 byte[] imageData = imageContent.Image.EncodeToPNG();
                 File.WriteAllBytes(filePath, imageData);
             }
+        }
+
+        public void SaveSubcontent(ISubcontent subcontent, string filePath)
+        {
+
         }
     }
 }

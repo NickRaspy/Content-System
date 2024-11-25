@@ -2,6 +2,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace URIMP
 {
@@ -64,6 +65,31 @@ namespace URIMP
         {
             contentDictionary.TryGetValue(id, out IContent content);
             return content;
+        }
+
+        public IEnumerable<IContent> GetAllContent()
+        {
+            return contentDictionary.Values;
+        }
+
+        public IEnumerable<IContent> GetAllContent(string id)
+        {
+            // Since IDs are unique in a dictionary, this will return a single item or an empty collection
+            if (contentDictionary.TryGetValue(id, out IContent content))
+            {
+                return new List<IContent> { content };
+            }
+            return new List<IContent>();
+        }
+
+        public string GetKey(string value)
+        {
+            return contentDictionary.FirstOrDefault(pair => pair.Value.Name == value).Key;
+        }
+
+        public IEnumerable<string> GetAllKeys()
+        {
+            return contentDictionary.Keys;
         }
 
         #endregion
