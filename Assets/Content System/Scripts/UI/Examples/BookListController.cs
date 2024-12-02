@@ -20,7 +20,7 @@ namespace URIMP.Examples
         {
             foreach (IContent content in ContentManager.Instance.GetAllContent())
             {
-                if(content is Book book)
+                if (content is Book book)
                     Books.Add(book);
             }
 
@@ -36,7 +36,7 @@ namespace URIMP.Examples
 
         public void LoadList()
         {
-            Books.ForEach(b => 
+            Books.ForEach(b =>
             {
                 Instantiate(bookHolder, bookContainer).Init(b, ManipulationAction, bookManipulator);
             });

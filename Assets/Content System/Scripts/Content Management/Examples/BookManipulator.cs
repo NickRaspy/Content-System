@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -61,15 +59,17 @@ namespace URIMP.Examples
         {
             Person defaultPerson = new() { Name = currentPerson.Name, PersonPagePath = currentPerson.PersonPagePath };
 
-            if(!string.IsNullOrEmpty(name)) currentPerson.Name = name;
-            if(!string.IsNullOrEmpty(imagePath)) currentPerson.PersonPagePath = imagePath;
+            if (!string.IsNullOrEmpty(name)) currentPerson.Name = name;
+            if (!string.IsNullOrEmpty(imagePath)) currentPerson.PersonPagePath = imagePath;
 
             EditSubcontent(currentBook.Id, defaultPerson, currentPerson);
         }
 
-        public Person GetPerson() { return currentPerson; }
+        public Person GetPerson()
+        { return currentPerson; }
 
-        public Book GetBook() { return currentBook; }
+        public Book GetBook()
+        { return currentBook; }
 
         public void DeletePerson()
         {
@@ -80,7 +80,6 @@ namespace URIMP.Examples
 
         public override void DefineContent()
         {
-
         }
     }
 }

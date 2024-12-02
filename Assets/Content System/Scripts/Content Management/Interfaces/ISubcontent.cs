@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace URIMP
 {
+    /// <summary>
+    /// Интерфейс, представляющий под-содержимое с именем.
+    /// </summary>
     public interface ISubcontent
     {
-        public string Name { get; set; }
+        /// <summary>
+        /// Имя под-содержимого.
+        /// </summary>
+        /// <value>
+        /// Строка, представляющая имя под-содержимого.
+        /// </value>
+        string Name { get; set; }
     }
 }

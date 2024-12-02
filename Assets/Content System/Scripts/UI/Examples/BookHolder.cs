@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +17,7 @@ namespace URIMP.Examples
 
             title.text = Book.Name;
 
-            foreach(Person person in Book.Persons)
+            foreach (Person person in Book.Persons)
             {
                 void bookManipAction()
                 {

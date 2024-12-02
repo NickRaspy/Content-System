@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +8,10 @@ namespace URIMP.Examples
         [SerializeField] private Image personPageView;
 
         protected BookManipulator bookManipulator;
+
         protected virtual void OnEnable()
         {
-            if(contentManipulator is not BookManipulator)
+            if (contentManipulator is not BookManipulator)
             {
                 Debug.LogError("Wrong manipulator. Book manipulator is required!");
                 return;

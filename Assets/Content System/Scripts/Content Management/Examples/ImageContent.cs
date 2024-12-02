@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.IO;
 
 namespace URIMP.Examples
 {

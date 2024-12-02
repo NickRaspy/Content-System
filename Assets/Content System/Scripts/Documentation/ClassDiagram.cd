@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="URIMP.ContentBase" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACgIAAAAAAAAAAAAAAAAQAAAEAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\ContentBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="URIMP.ContentConverter" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\ContentConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.ContentData" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\ContentData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.ContentFactory" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAACBAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\ContentFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.ContentManipulator" Collapsed="true">
+    <Position X="6" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAAgCEAAAGAEAAAAAAAAgAAAAACQACAAASECAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\ContentManipulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.ImageData" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\ImageData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.ImageMaster" Collapsed="true">
+    <Position X="20.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\ImageMaster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.FileSearch" Collapsed="true">
+    <Position X="15.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\FileSearch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.InfoButton" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAIAAACAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\InfoButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.ManipulationScreen" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\ManipulationScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.UIController" Collapsed="true">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAEAAAAAAAEAAQAAAAwAAgAAAAAEA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\UIController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.Book" Collapsed="true">
+    <Position X="10.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\Book.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.Person" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\Book.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="URIMP.Examples.BookHander" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAEAEAAAAAAAAAkAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\BookHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="URIMP.Examples.BookManipulator" Collapsed="true">
+    <Position X="6" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAIAAABAAAAAAEgAgAQAAAIAAAAAACAAiEAAg=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\BookManipulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.ImageContent" Collapsed="true">
+    <Position X="8.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\ImageContent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.ImageContentHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAEAEAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\ImageContentHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="URIMP.Examples.TextContent" Collapsed="true">
+    <Position X="12.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\TextContent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.TextContentHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAEAEAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\TextContentHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="URIMP.Examples.BookHolder" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAQAAAAABAAAAAAAAEAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\BookHolder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.BookListController" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAFEAAAABABgAAAAAAIAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\BookListController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.BookListOpener" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAABAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\BookListOpener.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.PersonAddScreen" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAAAAAAAAAAAAAAAAAAAAAAAAAIAAAgAAAAAAACAI=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\PersonAddScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.PersonButton" Collapsed="true">
+    <Position X="3" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAACAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\PersonButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.PersonDataScreen" Collapsed="true">
+    <Position X="4.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIIAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\PersonDataScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.PersonDeleteScreen" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAIAAAACAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\PersonDeleteScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.PersonEditScreen" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAEAAAAAAAAAAAAAAACAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\PersonEditScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.Examples.PersonScreen" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAIAAAAAEAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\PersonScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="URIMP.ContentManager" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAIAAAIAAAAABAAAAAQAAAAEAAAAQSEAACQAAEA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\ContentManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="URIMP.IContent" Collapsed="true">
+    <Position X="15.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACgIAAAAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Interfaces\IContent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="URIMP.IContentHandler" Collapsed="true">
+    <Position X="17" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAEAEAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Interfaces\IContentHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="URIMP.ISubcontent" Collapsed="true">
+    <Position X="18.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Interfaces\ISubcontent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="URIMP.Examples.BookLoadType" Collapsed="true">
+    <Position X="15.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\Content Management\Examples\BookHandler.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="URIMP.Examples.ManipulationType" Collapsed="true">
+    <Position X="17" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Content System\Scripts\UI\Examples\Enums\ManipulationType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ namespace URIMP.Examples
     {
         [SerializeField] private TMP_Dropdown bookList;
 
-        string selectedBookKey;
+        private string selectedBookKey;
 
         protected override void OnEnable()
         {
@@ -39,7 +37,7 @@ namespace URIMP.Examples
 
         public void OnBookListChange(int index) => SetKey(bookList.options[index].text);
 
-        void SetKey(string selectedValue)
+        private void SetKey(string selectedValue)
         {
             selectedBookKey = ContentManager.Instance.GetKey(selectedValue);
 

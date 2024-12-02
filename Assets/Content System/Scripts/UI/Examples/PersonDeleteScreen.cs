@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -11,6 +9,7 @@ namespace URIMP.Examples
         [SerializeField] private TMP_Text personName;
 
         [SerializeField] private Confirmation confirmationScreen;
+
         protected override void OnEnable()
         {
             base.OnEnable();

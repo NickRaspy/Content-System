@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,9 +16,9 @@ namespace URIMP.Examples
         public IContent LoadContent(string filePath)
         {
             List<Person> persons = new();
-            foreach (string innerPath in Directory.GetDirectories(filePath)) 
+            foreach (string innerPath in Directory.GetDirectories(filePath))
             {
-                if(Directory.GetFiles(innerPath).Length > 2)
+                if (Directory.GetFiles(innerPath).Length > 2)
                 {
                     Debug.LogError("Person contains too many files. It must contain only one text file with name and/or one image.");
                     continue;
@@ -27,20 +26,23 @@ namespace URIMP.Examples
 
                 Person person = new();
 
-                foreach(string file in Directory.GetFiles(innerPath))
+                foreach (string file in Directory.GetFiles(innerPath))
                 {
-                    switch (Path.GetExtension(file)) 
+                    switch (Path.GetExtension(file))
                     {
-                        case ".png": case ".jpg": case ".jpeg":
+                        case ".png":
+                        case ".jpg":
+                        case ".jpeg":
 
                             string[] pathParts = file.Split(Path.DirectorySeparatorChar);
 
                             person.PersonPagePath = Path.Combine(pathParts[^3], pathParts[^2], pathParts[^1]);
 
                             break;
+
                         case ".txt":
 
-                            if(bookLoadType == BookLoadType.Separated)
+                            if (bookLoadType == BookLoadType.Separated)
                                 person.Name = File.ReadAllText(file);
 
                             break;
@@ -58,14 +60,14 @@ namespace URIMP.Examples
 
         public void SaveContent(IContent content, string filePath)
         {
-            if (content is Book book) 
+            if (content is Book book)
             {
                 if (!Directory.Exists(filePath))
                     Directory.CreateDirectory(filePath);
 
                 var directories = Directory.GetDirectories(filePath);
 
-                for (int i = 0; i < directories.Length; i++) 
+                for (int i = 0; i < directories.Length; i++)
                 {
                     directories[i] = directories[i].Split('\\').Last();
                 }
@@ -74,8 +76,8 @@ namespace URIMP.Examples
 
                 persons.RemoveAll(x => directories.Contains(x.Name));
 
-                if(persons.Count > 0)
-                    persons.ForEach(p => 
+                if (persons.Count > 0)
+                    persons.ForEach(p =>
                     {
                         SaveSubcontent(p, Path.Combine(filePath, p.Name));
                     });
@@ -84,7 +86,7 @@ namespace URIMP.Examples
 
         public void SaveSubcontent(ISubcontent subcontent, string filePath)
         {
-            if(subcontent is Person person)
+            if (subcontent is Person person)
             {
                 if (!Directory.Exists(filePath))
                     Directory.CreateDirectory(filePath);
@@ -109,7 +111,7 @@ namespace URIMP.Examples
 
         public void EditSubcontent(ISubcontent previousSubcontent, ISubcontent newSubcontent, string filePath)
         {
-            if (previousSubcontent is Person previousPerson && newSubcontent is Person newPerson) 
+            if (previousSubcontent is Person previousPerson && newSubcontent is Person newPerson)
             {
                 string prevPath = Path.Combine(filePath, previousSubcontent.Name);
                 string newPath = Path.Combine(filePath, newPerson.Name);
@@ -126,6 +128,7 @@ namespace URIMP.Examples
             }
         }
     }
+
     public enum BookLoadType
     {
         ByFolderName, Separated

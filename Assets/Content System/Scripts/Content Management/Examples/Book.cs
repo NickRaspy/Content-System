@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace URIMP.Examples
 {
@@ -15,19 +13,17 @@ namespace URIMP.Examples
 
         public override void Delete()
         {
-
         }
 
         public override void Load()
         {
-
         }
 
         public override void Save()
         {
-
         }
     }
+
     public class Person : ISubcontent
     {
         public string Name { get; set; }

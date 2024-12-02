@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.IO;
-
 namespace URIMP.Examples
 {
     public class TextContent : ContentBase

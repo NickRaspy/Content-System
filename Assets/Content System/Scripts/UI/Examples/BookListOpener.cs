@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace URIMP.Examples
@@ -14,7 +12,7 @@ namespace URIMP.Examples
         {
             bookListController.ManipulationType = manipulationType;
 
-            bookListController.ManipulationAction += () => 
+            bookListController.ManipulationAction += () =>
             {
                 UIController.Instance.OpenScreen(requiredScreen.gameObject);
             };
