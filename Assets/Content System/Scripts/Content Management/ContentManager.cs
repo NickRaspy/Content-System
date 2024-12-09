@@ -21,6 +21,8 @@ namespace URIMP
 
         private Dictionary<string, IContent> contentDictionary;
 
+        private Dictionary<string, IModule> moduleDictionary;
+
         #region INSTANCE
 
         /// <summary>
