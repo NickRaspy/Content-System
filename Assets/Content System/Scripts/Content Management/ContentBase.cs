@@ -1,7 +1,7 @@
 namespace URIMP
 {
     /// <summary>
-    /// Абстрактный базовый класс для всех типов контента.
+    /// Абстрактный базовый класс для управления контентом.
     /// </summary>
     public abstract class ContentBase : IContent
     {
@@ -45,20 +45,5 @@ namespace URIMP
         /// </summary>
         /// <remarks>Метод должен быть реализован в производных классах для удаления специфического контента.</remarks>
         public abstract void Delete();
-
-        /// <summary>
-        /// Преобразует объект контента в объект ContentData.
-        /// </summary>
-        /// <returns>Возвращает объект ContentData, содержащий информацию о контенте.</returns>
-        /// <remarks>Тип контента определяется на основе имени класса.</remarks>
-        public ContentData ToContentData()
-        {
-            return new ContentData
-            {
-                Id = Id,
-                Name = Name,
-                Type = GetType().Name // Предполагается, что имя типа соответствует типу в JSON
-            };
-        }
     }
 }

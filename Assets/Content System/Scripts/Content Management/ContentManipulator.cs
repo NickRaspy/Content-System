@@ -6,42 +6,29 @@ using UnityEngine;
 namespace URIMP
 {
     /// <summary>
-    /// Абстрактный класс для манипуляции контентом.
+    /// Абстрактный класс для манипуляции контентом, включая создание, сохранение, удаление и редактирование.
     /// </summary>
     public abstract class ContentManipulator : MonoBehaviour
     {
+        [SerializeField] private string contentType;
         private string contentPath;
-        private Dictionary<string, IContentHandler> contentHandlers;
 
         /// <summary>
         /// Новый контент, который может быть создан.
         /// </summary>
+        /// <value>Объект, представляющий новый контент.</value>
         public IContent NewContent { get; private set; }
 
         /// <summary>
         /// Инициализация манипулятора контента.
         /// </summary>
+        /// <remarks>Должен быть реализован в производных классах для выполнения специфической инициализации.</remarks>
         public abstract void Init();
 
         private void Start()
         {
             contentPath = ContentManager.Instance.ContentPath;
-            contentHandlers = new Dictionary<string, IContentHandler>();
-
             Init();
-
-            print(contentHandlers.Count);
-        }
-
-        /// <summary>
-        /// Регистрирует обработчик контента для указанного типа.
-        /// </summary>
-        /// <param name="type">Тип контента.</param>
-        /// <param name="handler">Обработчик контента.</param>
-        /// <remarks>Если обработчик для данного типа уже существует, он будет перезаписан.</remarks>
-        public void RegisterContentHandler(string type, IContentHandler handler)
-        {
-            contentHandlers[type] = handler;
         }
 
         /// <summary>
@@ -52,23 +39,20 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для сохранения контента.</remarks>
         public bool SaveContentToFile(string id)
         {
-            IContent content = GetContent(id);
-
+            IContent content = ContentManager.Instance.GetContent(id);
             string filePath = Path.Combine(contentPath, content.Name);
-            foreach (var handler in contentHandlers.Values)
+
+            try
             {
-                try
-                {
-                    handler.SaveContent(content, filePath);
-                    return true;
-                }
-                catch
-                {
-                    // Если обработчик не подходит, продолжаем
-                }
+                ContentManager.Instance.GetContentHandler(contentType).SaveContent(content, filePath);
+                return true;
+            }
+            catch
+            {
+                // Если обработчик не подходит, продолжаем
             }
 
-            Debug.LogError("Подходящий обработчик для сохранения контента не найден.");
+            Debug.LogError("Не удалось сохранить контент.");
             return false;
         }
 
@@ -81,21 +65,19 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для сохранения подконтента.</remarks>
         public bool SaveSubcontentToFile(string id, ISubcontent subcontent)
         {
-            string filePath = Path.Combine(contentPath, GetContent(id).Name, subcontent.Name);
-            foreach (var handler in contentHandlers.Values)
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name, subcontent.Name);
+
+            try
             {
-                try
-                {
-                    handler.SaveSubcontent(subcontent, filePath);
-                    return true;
-                }
-                catch
-                {
-                    // Если обработчик не подходит, продолжаем
-                }
+                ContentManager.Instance.GetContentHandler(contentType).SaveSubcontent(subcontent, filePath);
+                return true;
+            }
+            catch
+            {
+                // Если обработчик не подходит, продолжаем
             }
 
-            Debug.LogError("Подходящий обработчик для сохранения подконтента не найден.");
+            Debug.LogError("Не удалось сохранить подконтент.");
             return false;
         }
 
@@ -107,8 +89,7 @@ namespace URIMP
         /// <remarks>Метод удаляет файл контента и его метаданные, если они существуют.</remarks>
         public bool DeleteContentFile(string id)
         {
-            string filePath = Path.Combine(contentPath, GetContent(id).Name);
-
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name);
             return DeleteFile(filePath);
         }
 
@@ -121,8 +102,7 @@ namespace URIMP
         /// <remarks>Метод удаляет файл подконтента и его метаданные, если они существуют.</remarks>
         public bool DeleteSubcontentFile(string id, ISubcontent subcontent)
         {
-            string filePath = Path.Combine(contentPath, GetContent(id).Name, subcontent.Name);
-
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name, subcontent.Name);
             return DeleteFile(filePath);
         }
 
@@ -131,7 +111,6 @@ namespace URIMP
         /// </summary>
         /// <param name="filePath">Путь к файлу.</param>
         /// <returns>Возвращает true, если файл успешно удален, иначе false.</returns>
-        /// <exception cref="IOException">Выбрасывается, если файл не может быть удален.</exception>
         private bool DeleteFile(string filePath)
         {
             bool isDeleted = false;
@@ -168,17 +147,14 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для редактирования контента.</remarks>
         public void EditContent(string id, IContent previousContent, IContent newContent)
         {
-            string filePath = Path.Combine(contentPath, GetContent(id).Name);
-            foreach (var handler in contentHandlers.Values)
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name);
+            try
             {
-                try
-                {
-                    handler.EditContent(previousContent, newContent, filePath);
-                }
-                catch
-                {
-                    // Если обработчик не подходит, продолжаем
-                }
+                ContentManager.Instance.GetContentHandler(contentType).EditContent(previousContent, newContent, filePath);
+            }
+            catch
+            {
+                Debug.LogError("Не удалось изменить контент.");
             }
         }
 
@@ -191,73 +167,15 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для редактирования подконтента.</remarks>
         public void EditSubcontent(string id, ISubcontent previousSubcontent, ISubcontent newSubcontent)
         {
-            string filePath = Path.Combine(contentPath, GetContent(id).Name);
-            foreach (var handler in contentHandlers.Values)
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name);
+            try
             {
-                try
-                {
-                    handler.EditSubcontent(previousSubcontent, newSubcontent, filePath);
-                }
-                catch
-                {
-                    // Если обработчик не подходит, продолжаем
-                }
+                ContentManager.Instance.GetContentHandler(contentType).EditSubcontent(previousSubcontent, newSubcontent, filePath);
+            }
+            catch
+            {
+                Debug.LogError("Не удалось изменить контент.");
             }
         }
-
-        /// <summary>
-        /// Загружает контент из файла.
-        /// </summary>
-        /// <param name="fileName">Имя файла.</param>
-        /// <returns>Возвращает загруженный контент или null, если загрузка не удалась.</returns>
-        /// <remarks>Метод пытается использовать все зарегистрированные обработчики для загрузки контента.</remarks>
-        public IContent LoadContentFromFile(string fileName)
-        {
-            string filePath = Path.Combine(contentPath, fileName);
-            if (Directory.Exists(filePath) || File.Exists(filePath))
-            {
-                foreach (var handler in contentHandlers.Values)
-                {
-                    try
-                    {
-                        IContent content = handler.LoadContent(filePath);
-                        if (content != null)
-                        {
-                            ContentManager.Instance.AddContent(content);
-                            return content;
-                        }
-                    }
-                    catch
-                    {
-                        // Если обработчик не подходит, продолжаем
-                    }
-                }
-            }
-
-            Debug.LogError("Подходящий обработчик для загрузки контента не найден.");
-            return null;
-        }
-
-        /// <summary>
-        /// Получает контент по идентификатору.
-        /// </summary>
-        /// <param name="id">Идентификатор контента.</param>
-        /// <returns>Возвращает контент, если найден, иначе null.</returns>
-        /// <remarks>Метод ищет контент в менеджере контента по указанному идентификатору.</remarks>
-        private IContent GetContent(string id)
-        {
-            IContent content = ContentManager.Instance.GetContent(id);
-            if (content == null)
-            {
-                Debug.LogError("Контент не найден.");
-                return null;
-            }
-            return content;
-        }
-
-        /// <summary>
-        /// Определяет контент.
-        /// </summary>
-        public abstract void DefineContent();
     }
 }

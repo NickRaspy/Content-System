@@ -16,11 +16,7 @@ namespace URIMP.Examples
 
         public override void Init()
         {
-            RegisterContentHandler("book", new BookHander(bookLoadType));
 
-            if (Directory.Exists(ContentManager.Instance.ContentPath) && Directory.GetDirectories(ContentManager.Instance.ContentPath).Length > 0)
-                foreach (string book in Directory.GetDirectories(ContentManager.Instance.ContentPath))
-                    LoadContentFromFile(book);
         }
 
         public void CreateBook()
@@ -76,10 +72,6 @@ namespace URIMP.Examples
             currentBook.Persons.Remove(currentPerson);
 
             DeleteSubcontentFile(currentBook.Id, currentPerson);
-        }
-
-        public override void DefineContent()
-        {
         }
     }
 }

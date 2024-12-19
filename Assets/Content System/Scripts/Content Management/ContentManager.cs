@@ -7,7 +7,7 @@ using UnityEngine;
 namespace URIMP
 {
     /// <summary>
-    /// Класс для управления контентом, реализующий паттерн Singleton.
+    /// Класс для управления контентом и его метаданными.
     /// </summary>
     public class ContentManager : MonoBehaviour
     {
@@ -17,11 +17,12 @@ namespace URIMP
         /// <summary>
         /// Путь к директории с контентом.
         /// </summary>
+        /// <value>Полный путь к директории с контентом.</value>
         public string ContentPath => Path.Combine(Application.streamingAssetsPath, ContentDirectory);
 
-        private Dictionary<string, IContent> contentDictionary;
+        private Dictionary<string, IContent> contentDictionary = new();
 
-        private Dictionary<string, IModule> moduleDictionary;
+        private Dictionary<string, IContentHandler> contentHandlers = new();
 
         #region INSTANCE
 
@@ -36,7 +37,6 @@ namespace URIMP
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
-                contentDictionary = new Dictionary<string, IContent>();
 
                 if (!Directory.Exists(ContentPath))
                 {
@@ -54,6 +54,27 @@ namespace URIMP
         #endregion INSTANCE
 
         #region CONTENT_MANIPULATION
+
+        /// <summary>
+        /// Регистрирует обработчик контента для указанного типа.
+        /// </summary>
+        /// <param name="type">Тип контента.</param>
+        /// <param name="handler">Обработчик контента.</param>
+        /// <remarks>Если обработчик для данного типа уже существует, он будет перезаписан.</remarks>
+        public void RegisterContentHandler(string type, IContentHandler handler)
+        {
+            contentHandlers[type] = handler;
+        }
+
+        /// <summary>
+        /// Получает обработчик контента для указанного типа.
+        /// </summary>
+        /// <param name="type">Тип контента.</param>
+        /// <returns>Обработчик контента для указанного типа.</returns>
+        public IContentHandler GetContentHandler(string type)
+        {
+            return contentHandlers[type];
+        }
 
         /// <summary>
         /// Добавляет контент в словарь.
@@ -143,7 +164,6 @@ namespace URIMP
         /// <summary>
         /// Загружает метаданные из файла.
         /// </summary>
-        /// <exception cref="JsonException">Выбрасывается, если файл метаданных поврежден или имеет неверный формат.</exception>
         private void LoadMetadata()
         {
             string path = Path.Combine(ContentPath, MetadataFile);
