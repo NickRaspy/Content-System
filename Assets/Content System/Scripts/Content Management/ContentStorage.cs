@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace URIMP
@@ -5,7 +6,7 @@ namespace URIMP
     /// <summary>
     /// Абстрактный класс для хранения и управления контентом.
     /// </summary>
-    public abstract class ContentStorage : MonoBehaviour
+    public abstract class ContentStorage<T> : MonoBehaviour where T : ContentStorage<T>
     {
         #region SINGLETON
 
@@ -13,7 +14,7 @@ namespace URIMP
         /// Экземпляр класса ContentStorage.
         /// </summary>
         /// <value>Синглтон экземпляр для доступа к методам и свойствам класса.</value>
-        public static ContentStorage Instance;
+        public static T Instance;
 
         #endregion
 
@@ -21,20 +22,13 @@ namespace URIMP
         {
             if (Instance == null)
             {
-                Instance = this;
-                DefineContentStorage();
+                Instance = (T)this;
             }
             else
             {
                 Destroy(gameObject);
             }
         }
-
-        /// <summary>
-        /// Определяет хранилище контента.
-        /// </summary>
-        /// <remarks>Должен быть реализован в производных классах для определения специфического хранилища контента.</remarks>
-        public abstract void DefineContentStorage();
 
         /// <summary>
         /// Определяет, загружен ли контент.
@@ -46,6 +40,6 @@ namespace URIMP
         /// Загружает контент.
         /// </summary>
         /// <remarks>Должен быть реализован в производных классах для загрузки специфического контента.</remarks>
-        public abstract void LoadContent();
+        public abstract IEnumerator LoadContent();
     }
 }

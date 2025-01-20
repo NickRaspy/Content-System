@@ -1,3 +1,4 @@
+using System.Collections;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -8,13 +9,9 @@ namespace URIMP
     /// <summary>
     /// Абстрактный класс для загрузки контента и управления сценами.
     /// </summary>
-    public abstract class ContentLoader : MonoBehaviour
+    public abstract class ContentLoader<T> : MonoBehaviour where T : ContentStorage<T>
     {
-        /// <summary>
-        /// Хранилище контента.
-        /// </summary>
-        /// <value>Ссылка на объект хранилища контента.</value>
-        [SerializeField] private ContentStorage contentStorage;
+        protected T storage;
 
         /// <summary>
         /// Следующая сцена для загрузки.
@@ -34,7 +31,7 @@ namespace URIMP
         /// <value>Строка, содержащая имя сцены редактирования.</value>
         [SerializeField] private string editSceneName;
 
-        private void Awake() => Init();
+        private void Start() => Init();
 
         /// <summary>
         /// Инициализирует загрузчик контента.
@@ -44,18 +41,23 @@ namespace URIMP
         {
             RegisterContentHandler();
             PrepareContent();
-            contentStorage.LoadContent();
+
+            storage = ContentStorage<T>.Instance;
+
+            IEnumerator Loading()
+            {
+                yield return storage.LoadContent();
 
 #if UNITY_EDITOR
-            switch (nextScene)
-            {
-                case NextScene.Main:
-                    SceneManager.LoadScene(mainSceneName);
-                    break;
-                case NextScene.Edit:
-                    SceneManager.LoadScene(editSceneName);
-                    break;
-            }
+                switch (nextScene)
+                {
+                    case NextScene.Main:
+                        SceneManager.LoadScene(mainSceneName);
+                        break;
+                    case NextScene.Edit:
+                        SceneManager.LoadScene(editSceneName);
+                        break;
+                }
 #else
             string[] args = System.Environment.GetCommandLineArgs();
 
@@ -64,6 +66,8 @@ namespace URIMP
             else 
                 SceneManager.LoadScene(mainSceneName);
 #endif
+            }
+            StartCoroutine(Loading());
         }
 
         /// <summary>
@@ -85,23 +89,26 @@ namespace URIMP
         /// <param name="type">Тип контента для загрузки.</param>
         /// <returns>Загруженный контент или null, если загрузка не удалась.</returns>
         /// <remarks>Использует ContentManager для загрузки и добавления контента.</remarks>
-        protected IContent LoadContentFromFile(string directoryName, string type)
+        protected IContent LoadContentFromFile(string directoryName)
         {
             string filePath = Path.Combine(ContentManager.Instance.ContentPath, directoryName);
             if (Directory.Exists(filePath) || File.Exists(filePath))
             {
-                try
+                foreach(var handler in ContentManager.Instance.GetContentHandlers())
                 {
-                    IContent content = ContentManager.Instance.GetContentHandler(type).LoadContent(filePath);
-                    if (content != null)
+                    try
                     {
-                        ContentManager.Instance.AddContent(content);
-                        return content;
+                        IContent content = handler.LoadContent(filePath);
+                        if (content != null)
+                        {
+                            ContentManager.Instance.AddContent(content);
+                            return content;
+                        }
                     }
-                }
-                catch
-                {
-                    // Ошибка обработки не указана, игнорируется
+                    catch
+                    {
+                        // Ошибка обработки не указана, игнорируется
+                    }
                 }
             }
 

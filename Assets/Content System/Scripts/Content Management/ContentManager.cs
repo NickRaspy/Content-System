@@ -76,6 +76,11 @@ namespace URIMP
             return contentHandlers[type];
         }
 
+        public IEnumerable<IContentHandler> GetContentHandlers()
+        {
+            return contentHandlers.Values;
+        }
+
         /// <summary>
         /// Добавляет контент в словарь.
         /// </summary>

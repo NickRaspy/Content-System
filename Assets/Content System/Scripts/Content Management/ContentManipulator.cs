@@ -10,7 +10,7 @@ namespace URIMP
     /// </summary>
     public abstract class ContentManipulator : MonoBehaviour
     {
-        [SerializeField] private string contentType;
+        protected string contentType;
         private string contentPath;
 
         /// <summary>

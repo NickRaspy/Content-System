@@ -8,15 +8,13 @@ namespace URIMP.Examples
 {
     public class BookManipulator : ContentManipulator
     {
-        [SerializeField] private BookLoadType bookLoadType;
-
         private Book currentBook;
 
         private Person currentPerson;
 
         public override void Init()
         {
-
+            contentType = "museum";
         }
 
         public void CreateBook()
