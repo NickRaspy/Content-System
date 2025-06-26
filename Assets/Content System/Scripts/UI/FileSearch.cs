@@ -1,5 +1,6 @@
 using SFB;
 using System.IO;
+using UnityEngine;
 
 namespace URIMP
 {
@@ -54,13 +55,13 @@ namespace URIMP
         /// <exception cref="FileNotFoundException">
         /// Выбрасывается, если файл изображения не может быть найден или загружен.
         /// </exception>
-        public static ImageData SearchImage()
+        public static (Sprite, string) SearchImage()
         {
             string imagePath = Search(new ExtensionFilter[] { new() { Name = "Image", Extensions = new string[] { "png", "jpg", "jpeg" } } });
 
-            if (string.IsNullOrEmpty(imagePath)) return null;
+            if (string.IsNullOrEmpty(imagePath)) return (null, null);
 
-            return ImageMaster.LoadImage(imagePath);
+            return (ImageMaster.LoadImage(imagePath), imagePath);
         }
     }
 }

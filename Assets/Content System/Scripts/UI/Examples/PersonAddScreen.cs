@@ -18,7 +18,7 @@ namespace URIMP.Examples
 
             List<string> options = new();
 
-            foreach (var content in ContentManager.Instance.GetAllContent())
+            foreach (var content in ContentManager.Instance.GetAllContent<Book>())
                 options.Add(content.Name);
 
             print(string.Join(", ", options));

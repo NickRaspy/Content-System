@@ -19,7 +19,7 @@ namespace URIMP.Examples
 
         public void CreateBook()
         {
-            string lastID = ContentManager.Instance.GetAllContent().Count() > 0 ? ContentManager.Instance.GetAllContent().Where(x => x is Book).Last().Id : "0";
+            string lastID = ContentManager.Instance.GetAllContent<Book>().Count() > 0 ? ContentManager.Instance.GetAllContent<Book>().Last().Id : "0";
 
             Match match = Regex.Match(lastID, @"\d+");
 
@@ -43,7 +43,7 @@ namespace URIMP.Examples
 
         public void SelectBook(string id)
         {
-            if (ContentManager.Instance.GetContent(id) is Book book) currentBook = book;
+            if (ContentManager.Instance.GetContent<Book>(id) is Book book) currentBook = book;
             else Debug.LogError("Данный объект не является книгой");
         }
 

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace URIMP
@@ -16,17 +17,45 @@ namespace URIMP
         /// Объект `ImageData`, содержащий путь к изображению и созданный спрайт.
         /// Возвращает null, если загрузка изображения не удалась.
         /// </returns>
-        public static ImageData LoadImage(string imagePath)
+        public static Sprite LoadImage(string imagePath, float pixelsPerUnit = 100f)
         {
             byte[] imageData = File.ReadAllBytes(imagePath);
 
-            Texture2D imageTexture = new Texture2D(2, 2);
+            if (Path.GetExtension(imagePath) == ".tif") Debug.Log(string.Join(", ",imageData));
 
-            if (imageTexture.LoadImage(imageData))
+            Texture2D texture = new(2, 2, TextureFormat.RGBA32, false, false);
+
+            if (texture.LoadImage(imageData))
             {
-                Sprite image = Sprite.Create(imageTexture, new Rect(0, 0, imageTexture.width, imageTexture.height), new Vector2(0.5f, 0.5f));
+                Sprite sprite = Sprite.Create(
+                    texture,
+                    new Rect(0, 0, texture.width, texture.height),
+                    Vector2.one * 0.5f,
+                    pixelsPerUnit,
+                    0,
+                    SpriteMeshType.FullRect
+                );
 
-                return new ImageData(imagePath, image);
+                return sprite;
+            }
+            else
+            {
+                Debug.LogError("Не удалось загрузить изображение");
+                return null;
+            }
+        }
+
+        public static Texture2D LoadRawTexture(string imagePath)
+        {
+            byte[] imageData = File.ReadAllBytes(imagePath);
+
+            if (Path.GetExtension(imagePath) == ".tif") Debug.Log(string.Join(", ", imageData));
+
+            Texture2D texture = new(1, 1, TextureFormat.RGBA32, false, false);
+
+            if (texture.LoadImage(imageData))
+            {
+                return texture;
             }
             else
             {

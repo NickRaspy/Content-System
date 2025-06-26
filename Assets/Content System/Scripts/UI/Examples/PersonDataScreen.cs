@@ -11,13 +11,13 @@ namespace URIMP.Examples
 
         public void SearchPage()
         {
-            ImageData image = FileSearch.SearchImage();
+            var image = FileSearch.SearchImage();
 
-            if (image == null) return;
+            if (image.Item1 == null || image.Item2 == null) return;
 
-            personPagePath = image.Path;
+            personPagePath = image.Item2;
 
-            SetPageView(image.Image);
+            SetPageView(image.Item1);
         }
     }
 }

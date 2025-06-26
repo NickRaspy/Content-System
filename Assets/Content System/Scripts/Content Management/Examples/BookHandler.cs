@@ -9,9 +9,8 @@ namespace URIMP.Examples
 {
     public class BookHander : IContentHandler
     {
-        private readonly BookLoadType bookLoadType;
-
-        public BookHander(BookLoadType bookLoadType) => this.bookLoadType = bookLoadType;
+        private const string personPageFileName = "Person_Page.png";
+        private const string personNameFileName = "Person_Name.txt";
 
         public IContent LoadContent(string filePath)
         {
@@ -41,16 +40,10 @@ namespace URIMP.Examples
                             break;
 
                         case ".txt":
-
-                            if (bookLoadType == BookLoadType.Separated)
-                                person.Name = File.ReadAllText(file);
-
+                            person.Name = File.ReadAllText(file);
                             break;
                     }
                 }
-
-                if (bookLoadType == BookLoadType.ByFolderName)
-                    person.Name = Path.GetFileName(innerPath);
 
                 persons.Add(person);
             }
@@ -91,12 +84,11 @@ namespace URIMP.Examples
                 if (!Directory.Exists(filePath))
                     Directory.CreateDirectory(filePath);
 
-                File.Copy(person.PersonPagePath, Path.Combine(filePath, "Person_Page.png"));
+                File.Copy(person.PersonPagePath, Path.Combine(filePath, personPageFileName));
 
-                person.PersonPagePath = Path.Combine(filePath, "Person_Page.png");
+                person.PersonPagePath = Path.Combine(filePath, personPageFileName);
 
-                if (bookLoadType == BookLoadType.Separated)
-                    File.WriteAllText(Path.Combine(filePath, "Person_Name.txt"), person.Name);
+                File.WriteAllText(Path.Combine(filePath, personNameFileName), person.Name);
             }
         }
 
@@ -127,10 +119,5 @@ namespace URIMP.Examples
                 newPerson.PersonPagePath = Path.Combine(newPath, "Person_Page.png");
             }
         }
-    }
-
-    public enum BookLoadType
-    {
-        ByFolderName, Separated
     }
 }

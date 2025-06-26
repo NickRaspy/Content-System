@@ -20,8 +20,14 @@ namespace URIMP
         /// <value>Полный путь к директории с контентом.</value>
         public string ContentPath => Path.Combine(Application.streamingAssetsPath, ContentDirectory);
 
-        private Dictionary<string, IContent> contentDictionary = new();
+        /// <summary>
+        /// Словарь для хранения контента по идентификатору.
+        /// </summary>
+        private Dictionary<string, Dictionary<string, IContent>> contentDictionary = new();
 
+        /// <summary>
+        /// Словарь для хранения обработчиков контента по типу.
+        /// </summary>
         private Dictionary<string, IContentHandler> contentHandlers = new();
 
         #region INSTANCE
@@ -70,12 +76,16 @@ namespace URIMP
         /// Получает обработчик контента для указанного типа.
         /// </summary>
         /// <param name="type">Тип контента.</param>
-        /// <returns>Обработчик контента для указанного типа.</returns>
+        /// <returns>Обработчик контента, если найден, иначе null.</returns>
         public IContentHandler GetContentHandler(string type)
         {
-            return contentHandlers[type];
+            contentHandlers.TryGetValue(type, out var handler);
+            return handler;
         }
 
+        /// <summary>
+        /// Возвращает все зарегистрированные обработчики контента.
+        /// </summary>
         public IEnumerable<IContentHandler> GetContentHandlers()
         {
             return contentHandlers.Values;
@@ -84,11 +94,15 @@ namespace URIMP
         /// <summary>
         /// Добавляет контент в словарь.
         /// </summary>
+        /// <param name="type">Тип контента.</param>
         /// <param name="content">Контент для добавления.</param>
         /// <remarks>Если контент с таким же идентификатором уже существует, он будет перезаписан.</remarks>
-        public void AddContent(IContent content)
+        public void AddContent(string type, IContent content)
         {
-            contentDictionary[content.Id] = content;
+            if (!contentDictionary.ContainsKey(type))
+                contentDictionary[type] = new Dictionary<string, IContent>();
+
+            contentDictionary[type][content.Id] = content;
             SaveMetadata();
         }
 
@@ -100,66 +114,83 @@ namespace URIMP
         /// <remarks>Если контент с указанным идентификатором не найден, метод вернет false.</remarks>
         public bool RemoveContent(string id)
         {
-            if (contentDictionary.ContainsKey(id))
+            bool removed = false;
+            foreach (var typeDict in contentDictionary.Values)
             {
-                contentDictionary.Remove(id);
+                if (typeDict.Remove(id))
+                    removed = true;
+            }
+            if (removed)
                 SaveMetadata();
-                return true;
-            }
-            return false;
+            return removed;
         }
 
         /// <summary>
-        /// Получает контент по идентификатору.
+        /// Получает первый найденный контент типа T по id среди всех типов (handler'ов).
         /// </summary>
         /// <param name="id">Идентификатор контента.</param>
-        /// <returns>Возвращает контент, если найден, иначе null.</returns>
-        public IContent GetContent(string id)
+        /// <returns>Возвращает контент типа T, если найден, иначе null.</returns>
+        public T GetContent<T>(string id) where T : IContent
         {
-            contentDictionary.TryGetValue(id, out IContent content);
-            return content;
-        }
-
-        /// <summary>
-        /// Получает все контенты.
-        /// </summary>
-        /// <returns>Возвращает перечисление всех контентов.</returns>
-        public IEnumerable<IContent> GetAllContent()
-        {
-            return contentDictionary.Values;
-        }
-
-        /// <summary>
-        /// Получает контент по идентификатору.
-        /// </summary>
-        /// <param name="id">Идентификатор контента.</param>
-        /// <returns>Возвращает перечисление с одним элементом контента или пустое перечисление.</returns>
-        public IEnumerable<IContent> GetAllContent(string id)
-        {
-            if (contentDictionary.TryGetValue(id, out IContent content))
+            foreach (var typeDict in contentDictionary.Values)
             {
-                return new List<IContent> { content };
+                if (typeDict.TryGetValue(id, out IContent content) && content is T tContent)
+                    return tContent;
             }
-            return new List<IContent>();
+            return default;
         }
 
         /// <summary>
-        /// Получает ключ по значению контента.
+        /// Получает все контенты типа T из всех типов (handler'ов).
         /// </summary>
-        /// <param name="value">Значение контента.</param>
-        /// <returns>Возвращает ключ, если найден, иначе null.</returns>
+        /// <returns>Перечисление всех контентов типа T.</returns>
+        public IEnumerable<T> GetAllContent<T>() where T : IContent
+        {
+            return contentDictionary.Values
+                .SelectMany(dict => dict.Values)
+                .OfType<T>();
+        }
+
+        /// <summary>
+        /// Получает первый найденный id по значению контента (Name).
+        /// </summary>
+        /// <param name="value">Значение контента (Name).</param>
+        /// <returns>id если найден, иначе null.</returns>
         public string GetKey(string value)
         {
-            return contentDictionary.FirstOrDefault(pair => pair.Value.Name == value).Key;
+            foreach (var typePair in contentDictionary)
+            {
+                foreach (var contentPair in typePair.Value)
+                {
+                    if (contentPair.Value.Name == value)
+                        return contentPair.Key;
+                }
+            }
+            return null;
         }
 
         /// <summary>
-        /// Получает все ключи контентов.
+        /// Получает все id всех контентов всех типов.
         /// </summary>
-        /// <returns>Возвращает перечисление всех ключей.</returns>
+        /// <returns>Перечисление всех id.</returns>
         public IEnumerable<string> GetAllKeys()
         {
-            return contentDictionary.Keys;
+            return contentDictionary.Values.SelectMany(dict => dict.Keys);
+        }
+
+        /// <summary>
+        /// Получает все пары (тип, id) всех контентов.
+        /// </summary>
+        /// <returns>Перечисление кортежей (тип, id).</returns>
+        public IEnumerable<(string type, string id)> GetAllTypeIdPairs()
+        {
+            foreach (var typePair in contentDictionary)
+            {
+                foreach (var id in typePair.Value.Keys)
+                {
+                    yield return (typePair.Key, id);
+                }
+            }
         }
 
         #endregion CONTENT_MANIPULATION
@@ -181,12 +212,21 @@ namespace URIMP
                 };
                 try
                 {
-                    contentDictionary = JsonConvert.DeserializeObject<Dictionary<string, IContent>>(json, settings);
+                    var loaded = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, IContent>>>(json, settings);
+                    if (loaded != null)
+                        contentDictionary = loaded;
+                    else
+                        contentDictionary = new Dictionary<string, Dictionary<string, IContent>>();
                 }
                 catch (JsonException ex)
                 {
                     Debug.LogError($"Ошибка при загрузке метаданных: {ex.Message}");
+                    contentDictionary = new Dictionary<string, Dictionary<string, IContent>>();
                 }
+            }
+            else
+            {
+                contentDictionary = new Dictionary<string, Dictionary<string, IContent>>();
             }
         }
 

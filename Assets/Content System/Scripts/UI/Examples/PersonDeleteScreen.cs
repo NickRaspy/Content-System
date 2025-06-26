@@ -18,7 +18,7 @@ namespace URIMP.Examples
 
             personName.text = person.Name;
 
-            SetPageView(ImageMaster.LoadImage(Path.Combine(ContentManager.Instance.ContentPath, person.PersonPagePath)).Image);
+            SetPageView(ImageMaster.LoadImage(Path.Combine(ContentManager.Instance.ContentPath, person.PersonPagePath)));
         }
 
         public void Confirmation()

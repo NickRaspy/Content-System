@@ -39,7 +39,7 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для сохранения контента.</remarks>
         public bool SaveContentToFile(string id)
         {
-            IContent content = ContentManager.Instance.GetContent(id);
+            IContent content = ContentManager.Instance.GetContent<IContent>(id);
             string filePath = Path.Combine(contentPath, content.Name);
 
             try
@@ -65,7 +65,7 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для сохранения подконтента.</remarks>
         public bool SaveSubcontentToFile(string id, ISubcontent subcontent)
         {
-            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name, subcontent.Name);
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent<IContent>(id).Name, subcontent.Name);
 
             try
             {
@@ -89,7 +89,7 @@ namespace URIMP
         /// <remarks>Метод удаляет файл контента и его метаданные, если они существуют.</remarks>
         public bool DeleteContentFile(string id)
         {
-            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name);
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent<IContent>(id).Name);
             return DeleteFile(filePath);
         }
 
@@ -102,7 +102,7 @@ namespace URIMP
         /// <remarks>Метод удаляет файл подконтента и его метаданные, если они существуют.</remarks>
         public bool DeleteSubcontentFile(string id, ISubcontent subcontent)
         {
-            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name, subcontent.Name);
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent<IContent>(id).Name, subcontent.Name);
             return DeleteFile(filePath);
         }
 
@@ -147,7 +147,7 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для редактирования контента.</remarks>
         public void EditContent(string id, IContent previousContent, IContent newContent)
         {
-            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name);
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent<IContent>(id).Name);
             try
             {
                 ContentManager.Instance.GetContentHandler(contentType).EditContent(previousContent, newContent, filePath);
@@ -167,7 +167,7 @@ namespace URIMP
         /// <remarks>Метод пытается использовать все зарегистрированные обработчики для редактирования подконтента.</remarks>
         public void EditSubcontent(string id, ISubcontent previousSubcontent, ISubcontent newSubcontent)
         {
-            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent(id).Name);
+            string filePath = Path.Combine(contentPath, ContentManager.Instance.GetContent<IContent>(id).Name);
             try
             {
                 ContentManager.Instance.GetContentHandler(contentType).EditSubcontent(previousSubcontent, newSubcontent, filePath);

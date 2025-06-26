@@ -18,7 +18,7 @@ namespace URIMP.Examples
 
             bookName.text = bookManipulator.GetBook().Name;
 
-            SetPageView(ImageMaster.LoadImage(Path.Combine(ContentManager.Instance.ContentPath, person.PersonPagePath)).Image);
+            SetPageView(ImageMaster.LoadImage(Path.Combine(ContentManager.Instance.ContentPath, person.PersonPagePath)));
         }
 
         public void SetBook(string bookName) => this.bookName.text = bookName;

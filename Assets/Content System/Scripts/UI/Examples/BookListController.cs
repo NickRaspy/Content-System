@@ -18,7 +18,7 @@ namespace URIMP.Examples
 
         private void OnEnable()
         {
-            foreach (IContent content in ContentManager.Instance.GetAllContent())
+            foreach (IContent content in ContentManager.Instance.GetAllContent<Book>())
             {
                 if (content is Book book)
                     Books.Add(book);
